@@ -3,7 +3,7 @@ class BaseFigure {
         this.x = x;
         this.y = y;
         this.stones = stones;
-        this.color = Utils.generateRandomColor();
+        this.color = Utils.generateRandom(6);
 
         this.currentPosition = 0;
     }

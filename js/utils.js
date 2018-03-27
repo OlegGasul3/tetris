@@ -1,5 +1,5 @@
 class Utils {
-    static generateRandomColor() {
-        return Math.floor(Math.random() * 6);
+    static generateRandom(value) {
+        return Math.floor(Math.random() * value) - 1;
     }
 }
