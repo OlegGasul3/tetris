@@ -21,10 +21,7 @@ function GameEngine(uiManager, maxX, maxY) {
 
         setInterval(function() {
             removeFigure(currentFigure);
-
-            var coords = currentFigure.getCoords();
-            currentFigure.setCoords(coords.x - 1, coords.y);
-
+            moveDown();
             paintFigure(currentFigure);
         }, 1000);
     };
@@ -61,22 +58,35 @@ function GameEngine(uiManager, maxX, maxY) {
     }
 
     function moveLeft() {
-        removeFigure(currentFigure);
         var coords = currentFigure.getCoords();
+        var newY = coords.y - 1;
+        if (newY < 0 || newY >= maxY) {
+            return;
+        }
+
+        removeFigure(currentFigure);
         currentFigure.setCoords(coords.x, coords.y - 1);
         paintFigure(currentFigure);
     }
 
     function moveRight() {
-        removeFigure(currentFigure);
         var coords = currentFigure.getCoords();
-        currentFigure.setCoords(coords.x, coords.y + 1);
+        var newY = coords.y + 1;
+        var borderY = Math.max.apply(Math, currentFigure.getCurrentStones().map(function(stone) {
+            return stone.y;
+        }));
+        if (newY < 0 || (newY + borderY) >= maxY) {
+            return;
+        }
+
+        removeFigure(currentFigure);
+        currentFigure.setCoords(coords.x, newY);
         paintFigure(currentFigure);
     }
 
     function moveDown() {
-        removeFigure(currentFigure);
         var coords = currentFigure.getCoords();
+        removeFigure(currentFigure);
         currentFigure.setCoords(coords.x - 1, coords.y);
         paintFigure(currentFigure);
     }
