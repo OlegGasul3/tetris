@@ -7,7 +7,7 @@ function UIManager(viewport, maxX, maxY) {
 
     ctx.beginPath();
     ctx.rect(0, 0, (maxY + 1) * step, (maxX + 1) * step);
-    ctx.fillStyle = "red";
+    ctx.fillStyle = "gray";
     ctx.fill();
 
     var background = new Image();
@@ -37,9 +37,9 @@ function UIManager(viewport, maxX, maxY) {
 
     this.init = function(callback) {
         setTimeout(function() {
-            fillWholeField()
+            fillWholeField();
             callback()
-        }, 1000);
+        }, 2000);
     };
 
     this.clearStone = function(x, y) {

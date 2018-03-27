@@ -5,9 +5,10 @@ function GameEngine(uiManager, maxX, maxY) {
 
     function initField() {
         for (var i = 0; i < maxX; i++) {
+            field[i] = [];
 
             for (var j = 0; j < maxX; j++) {
-
+                field[i][j] = undefined;
             }
         }
     }
@@ -73,6 +74,13 @@ function GameEngine(uiManager, maxX, maxY) {
         paintFigure(currentFigure);
     }
 
+    function moveDown() {
+        removeFigure(currentFigure);
+        var coords = currentFigure.getCoords();
+        currentFigure.setCoords(coords.x - 1, coords.y);
+        paintFigure(currentFigure);
+    }
+
     document.onkeydown = function(e) {
         if (!currentFigure) {
             return;
@@ -83,6 +91,8 @@ function GameEngine(uiManager, maxX, maxY) {
             moveLeft(currentFigure);
         } else if (e.keyCode == '39') {
             moveRight();
+        } else if (e.keyCode == '40') {
+            moveDown();
         }
     };
 
