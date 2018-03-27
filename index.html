@@ -2,18 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <script src="/js/GameEngine.js"></script>
-    <script src="/js/UIManager.js"></script>
+    <script src="./js/GameEngine.js"></script>
+    <script src="./js/UIManager.js"></script>
+    <script src="./js/figures.js"></script>
+    <script src="./js/utils.js"></script>
 </head>
 
-<body onload="init()">
-    <div id="viewport"></div>
+<body onload="init()" bgcolor="#f5f5dc">
+    <canvas id="canvas"></canvas>
 
     <script>
-        var gameEngine = new GameEngine();
-        var gameEngine = new GameEngine();
-        function init() {
+        var uiManager = new UIManager(document.getElementById("canvas"), 26, 16);
+        var gameEngine = new GameEngine(uiManager);
 
+        function init() {
+            uiManager.init(function() {
+                gameEngine.start();
+            });
         }
     </script>
 </body>
