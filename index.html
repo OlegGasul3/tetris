@@ -15,9 +15,10 @@
     <script>
         var maxX = 26;
         var maxY = 16;
+        var delay = 800;
 
         var uiManager = new UIManager(document.getElementById("canvas"), maxX, maxY);
-        var gameEngine = new GameEngine(uiManager, maxX, maxY);
+        var gameEngine = new GameEngine(uiManager, maxX, maxY, delay);
 
         function init() {
             uiManager.init();

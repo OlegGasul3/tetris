@@ -1,4 +1,4 @@
-function GameEngine(uiManager, maxX, maxY) {
+function GameEngine(uiManager, maxX, maxY, delay) {
     const FIGURES = [LineFigure, AxeFigure, CubeFigure, PointFigure, TriangleFigure, LadderRFigure, LadderLFigure];
     const INVISIBLE_ROWS = 4;
 
@@ -37,7 +37,7 @@ function GameEngine(uiManager, maxX, maxY) {
             processFigureFallen();
             moveDown();
             paintFigure(currentFigure);
-        }, 800);
+        }, delay);
     }
 
     function generateNewFigure(x, y) {
