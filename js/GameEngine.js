@@ -17,6 +17,7 @@ function GameEngine(uiManager, maxX, maxY) {
     }
 
     var currentFigure = null;
+    var mainLoop;
 
     this.start = function() {
         initField();
@@ -27,7 +28,11 @@ function GameEngine(uiManager, maxX, maxY) {
         generateNewFigure();
         paintFigure(currentFigure);
 
-        setInterval(function() {
+        if (mainLoop) {
+            clearInterval(mainLoop);
+        }
+
+        mainLoop = setInterval(function() {
             removeFigure(currentFigure);
             processFigureFallen();
             moveDown();
@@ -38,6 +43,12 @@ function GameEngine(uiManager, maxX, maxY) {
     function generateNewFigure(x, y) {
         var index = Utils.generateRandom(FIGURES.length);
         currentFigure = new FIGURES[index](maxX - 2, Math.floor(maxY / 2));
+
+        if (isFigureFallen()) {
+            initField();
+            uiManager.fillWholeSpace(field);
+            startMainLoop();
+        }
     }
     
     function paintFigure(figure) {
@@ -93,20 +104,6 @@ function GameEngine(uiManager, maxX, maxY) {
         paintFigure(currentFigure);
     }
 
-    function moveDown() {
-        if (!canMove(-1, 0)) {
-            return;
-        }
-
-        var coords = currentFigure.getCoords();
-        removeFigure(currentFigure);
-
-        currentFigure.setCoords(coords.x - 1, coords.y);
-
-        paintFigure(currentFigure);
-        processFigureFallen();
-    }
-
     function isFieldEmpty(x, y) {
         if (x < 0 || x >= maxX || y < 0 || y >= maxY) {
             return false;
@@ -141,10 +138,6 @@ function GameEngine(uiManager, maxX, maxY) {
     function removeFilledRows(indexes) {
         var min = indexes[0];
         var max = indexes[indexes.length - 1];
-
-        console.log('removeFilledRows()');
-        console.log('min=' + min);
-        console.log('max=' + max);
 
         var decr = 0;
         var count = 0;
@@ -190,17 +183,21 @@ function GameEngine(uiManager, maxX, maxY) {
         uiManager.fillWholeSpace(field);
     }
 
-    function processFigureFallen() {
+    function isFigureFallen() {
         var coords = currentFigure.getCoords();
-        var stones = currentFigure.getCurrentStones();
 
-        if (stones.every(function(stone) {
-            return isFieldEmpty(coords.x + stone.x - 1, coords.y + stone.y)
-        })) {
+        return currentFigure.getCurrentStones().some(function(stone) {
+            return !isFieldEmpty(coords.x + stone.x - 1, coords.y + stone.y)
+        });
+    }
+
+    function processFigureFallen() {
+        if (!isFigureFallen()) {
             return;
         }
 
-        stones.forEach(function(stone) {
+        var coords = currentFigure.getCoords();
+        currentFigure.getCurrentStones().forEach(function(stone) {
             markFieldWithCurrentColor(coords.x + stone.x, coords.y + stone.y);
         });
 
@@ -224,6 +221,20 @@ function GameEngine(uiManager, maxX, maxY) {
         });
     }
 
+    function moveDown() {
+        if (!canMove(-1, 0)) {
+            return;
+        }
+
+        var coords = currentFigure.getCoords();
+        removeFigure(currentFigure);
+
+        currentFigure.setCoords(coords.x - 1, coords.y);
+
+        paintFigure(currentFigure);
+        processFigureFallen();
+    }
+    
     document.onkeydown = function(e) {
         if (!currentFigure) {
             return;

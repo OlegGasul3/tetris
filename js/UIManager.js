@@ -1,48 +1,41 @@
 function UIManager(viewport, maxX, maxY) {
-    const STEP = 16;
-
-    var ctx = viewport.getContext("2d");
-    ctx.canvas.width = maxY * STEP;
-    ctx.canvas.height = maxX * STEP;
-
-    ctx.beginPath();
-    ctx.rect(0, 0, (maxY + 1) * STEP, (maxX + 1) * STEP);
-    ctx.fillStyle = "gray";
-    ctx.fill();
-
-    var background = new Image();
-    background.src = Images.background();
-
-    var images = Images.sources().map(function(source) {
+    const IMAGE_SIZE = 16;
+    const IMAGES = Images.sources().map(function(source) {
         var image = new Image();
         image.src = source;
         return image;
     });
+    const BACKGROUND = new Image();
+    BACKGROUND.src = Images.background();
 
-    function fillWholeField() {
+    var ctx = viewport.getContext("2d");
+    ctx.canvas.width = maxY * IMAGE_SIZE;
+    ctx.canvas.height = maxX * IMAGE_SIZE;
+
+    function fillBackground() {
         for (var x = 0; x < maxX; x++) {
             for (var y = 0; y < maxY; y++) {
-                drawImage(background, x, y);
+                drawImage(BACKGROUND, x, y);
             }
         }
     }
 
     function drawImage(image, x, y) {
-        var realX = y * STEP;
-        var realY = (maxX - x - 1) * STEP;
+        var realX = y * IMAGE_SIZE;
+        var realY = (maxX - x - 1) * IMAGE_SIZE;
         ctx.drawImage(image, realX, realY);
     }
 
     this.init = function() {
-        fillWholeField();
+        fillBackground();
     };
 
     this.clearStone = function(x, y) {
-        drawImage(background, x, y);
+        drawImage(BACKGROUND, x, y);
     };
 
     this.paintStone = function(x, y, color) {
-        drawImage(images[color], x, y);
+        drawImage(IMAGES[color], x, y);
     };
 
     this.fillWholeSpace = function(field) {
@@ -50,7 +43,7 @@ function UIManager(viewport, maxX, maxY) {
             var row = field[i];
             for (var j = 0; j < row.length; j++) {
                 var color = field[i][j];
-                drawImage(color !== false ? images[color] : background, i, j);
+                drawImage(color !== false ? IMAGES[color] : BACKGROUND, i, j);
             }
         }
     };
