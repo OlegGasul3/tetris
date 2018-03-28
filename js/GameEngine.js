@@ -26,7 +26,7 @@ function GameEngine(uiManager, maxX, maxY) {
     function startMainLoop() {
         generateNewFigure();
         paintFigure(currentFigure);
-        
+
         setInterval(function() {
             removeFigure(currentFigure);
             processFigureFallen();
@@ -142,22 +142,28 @@ function GameEngine(uiManager, maxX, maxY) {
         var min = indexes[0];
         var max = indexes[indexes.length - 1];
 
+        console.log('removeFilledRows()');
+        console.log('min=' + min);
+        console.log('max=' + max);
+
         var decr = 0;
         var count = 0;
         var start = -1;
 
         for (var i = min; i <= max; i++) {
-            var lineFilled = field[indexes[i - decr]].every(function(item) {
+            var index = i - decr;
+
+            var lineFilled = field[index].every(function(item) {
                 return item !== false;
             });
 
             if (lineFilled) {
                 if (start < 0) {
-                    start = i;
+                    start = index;
                 }
                 count++;
             } else if (start >= 0) {
-                field.splice(indexes[start - decr], count);
+                field.splice(start - decr, count);
                 decr += count;
                 start = -1;
 
@@ -168,15 +174,16 @@ function GameEngine(uiManager, maxX, maxY) {
         }
 
         if (start >= 0) {
-            field.splice(indexes[start - decr], count);
+            field.splice(start - decr, count);
             fillUpperLinesEmpty(count);
         }
     }
 
     function checkAndRemoveFilledLines() {
+        var coords = currentFigure.getCoords();
         var stones = currentFigure.getCurrentStones();
         var indexes = stones.map(function(stone) {
-            return stone.x;
+            return coords.x + stone.x;
         }).sort();
         removeFilledRows(indexes);
 
