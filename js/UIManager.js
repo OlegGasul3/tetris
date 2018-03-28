@@ -33,11 +33,8 @@ function UIManager(viewport, maxX, maxY) {
         ctx.drawImage(image, realX, realY);
     }
 
-    this.init = function(callback) {
-        setTimeout(function() {
-            fillWholeField();
-            callback()
-        }, 2000);
+    this.init = function() {
+        fillWholeField();
     };
 
     this.clearStone = function(x, y) {

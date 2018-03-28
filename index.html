@@ -13,16 +13,15 @@
     <canvas id="canvas"></canvas>
 
     <script>
-        var maxX = 22;
-        var maxY = 14;
+        var maxX = 26;
+        var maxY = 16;
 
         var uiManager = new UIManager(document.getElementById("canvas"), maxX, maxY);
         var gameEngine = new GameEngine(uiManager, maxX, maxY);
 
         function init() {
-            uiManager.init(function() {
-                gameEngine.start();
-            });
+            uiManager.init();
+            gameEngine.start();
         }
     </script>
 </body>
