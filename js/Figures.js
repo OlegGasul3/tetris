@@ -116,12 +116,3 @@ class LadderLFigure extends BaseFigure {
         super(x, y, stones);
     }
 }
-
-class CrossFigure extends BaseFigure {
-    constructor(x, y) {
-        var stones = [
-            [{x: 1, y: 0}, {x: 2, y: 1}, {x: 1, y: 1}, {x: 0, y: 1}, {x: 1, y: 2}]
-        ];
-        super(x, y, stones);
-    }
-}
