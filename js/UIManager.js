@@ -1,12 +1,12 @@
 function UIManager(viewport, maxX, maxY) {
-    var step = 16;
+    const STEP = 16;
 
     var ctx = viewport.getContext("2d");
-    ctx.canvas.width = maxY * step;
-    ctx.canvas.height = maxX * step;
+    ctx.canvas.width = maxY * STEP;
+    ctx.canvas.height = maxX * STEP;
 
     ctx.beginPath();
-    ctx.rect(0, 0, (maxY + 1) * step, (maxX + 1) * step);
+    ctx.rect(0, 0, (maxY + 1) * STEP, (maxX + 1) * STEP);
     ctx.fillStyle = "gray";
     ctx.fill();
 
@@ -28,8 +28,8 @@ function UIManager(viewport, maxX, maxY) {
     }
 
     function drawImage(image, x, y) {
-        var realX = y * step;
-        var realY = (maxX - x - 1) * step;
+        var realX = y * STEP;
+        var realY = (maxX - x - 1) * STEP;
         ctx.drawImage(image, realX, realY);
     }
 

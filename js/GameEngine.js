@@ -1,4 +1,8 @@
 function GameEngine(uiManager, maxX, maxY) {
+    const INVISIBLE_ROWS = 4;
+
+    maxX += INVISIBLE_ROWS;
+
     var FIGURES = [LineFigure, PointFigure, AxeFigure, CubeFigure, TriangleFigure, LadderRFigure, LadderLFigure];
 
     var field = [];
@@ -110,7 +114,7 @@ function GameEngine(uiManager, maxX, maxY) {
             return true;
         }
 
-        return !field[x][y];
+        return field[x][y] === false;
     }
 
     function markField(x, y) {
@@ -120,29 +124,61 @@ function GameEngine(uiManager, maxX, maxY) {
 
         field[x][y] = currentFigure.getColor();
     }
+    
+    function fillUpperLinesEmpty(count) {
+        for (var i = 0; i < count; i++) {
+            var index = field.length;
+            field[index] = [];
+
+            for (var j = 0; j < maxY; j++) {
+                field[index][j] = false;
+            }
+        }
+    }
+
+    function removeFilledRows(indexes) {
+        var min = indexes[0];
+        var max = indexes[indexes.length - 1];
+
+        var decr = 0;
+        var count = 0;
+        var start = -1;
+
+        for (var i = min; i <= max; i++) {
+            var lineFilled = field[indexes[i - decr]].every(function(item) {
+                return item !== false;
+            });
+
+            if (lineFilled) {
+                if (start < 0) {
+                    start = i;
+                }
+                count++;
+            } else if (start >= 0) {
+                field.splice(indexes[start - decr], count);
+                decr += count;
+                start = -1;
+
+                fillUpperLinesEmpty(count);
+
+                count = 0;
+            }
+        }
+
+        if (start >= 0) {
+            field.splice(indexes[start - decr], count);
+            fillUpperLinesEmpty(count);
+        }
+    }
 
     function checkFieldsForRemoving() {
         var stones = currentFigure.getCurrentStones();
         var indexes = stones.map(function(stone) {
             return stone.x;
         }).sort();
+        removeFilledRows(indexes);
 
-        var fullLine = field[indexes[0]].every(function(item) {
-            return item !== false;
-        });
-
-        if (fullLine) {
-            console.log('fullLine');
-            field.splice(indexes[0], 1);
-
-            var index = field.length;
-            field[index] = [];
-            for (var j = 0; j < maxY; j++) {
-                field[index][j] = false;
-            }
-
-            uiManager.fillWholeSpace(field);
-        }
+        uiManager.fillWholeSpace(field);
     }
 
     function checkFigureFallen() {
