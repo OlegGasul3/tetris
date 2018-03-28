@@ -1,5 +1,5 @@
 function GameEngine(uiManager, maxX, maxY, delay) {
-    const FIGURES = [LineFigure, AxeFigure, CubeFigure, PointFigure, TriangleFigure, LadderRFigure, LadderLFigure];
+    const FIGURES = [LineFigure, AxeFigure, CubeFigure, PointFigure, TriangleFigure, LadderRFigure, LadderLFigure, CrossFigure];
     const INVISIBLE_ROWS = 4;
 
     maxX += INVISIBLE_ROWS;
