@@ -1,9 +1,8 @@
 function GameEngine(uiManager, maxX, maxY) {
+    const FIGURES = [LineFigure, AxeFigure, CubeFigure, PointFigure, TriangleFigure, LadderRFigure, LadderLFigure];
     const INVISIBLE_ROWS = 4;
 
     maxX += INVISIBLE_ROWS;
-
-    var FIGURES = [LineFigure, PointFigure, AxeFigure, CubeFigure, TriangleFigure, LadderRFigure, LadderLFigure];
 
     var field = [];
 
@@ -21,20 +20,23 @@ function GameEngine(uiManager, maxX, maxY) {
 
     this.start = function() {
         initField();
+        startMainLoop();
+    };
+
+    function startMainLoop() {
         generateNewFigure();
         paintFigure(currentFigure);
-
+        
         setInterval(function() {
             removeFigure(currentFigure);
-            checkFigureFallen();
+            processFigureFallen();
             moveDown();
             paintFigure(currentFigure);
         }, 800);
-    };
-    
+    }
+
     function generateNewFigure(x, y) {
         var index = Utils.generateRandom(FIGURES.length);
-        console.log('Index: ' + index);
         currentFigure = new FIGURES[index](maxX - 2, Math.floor(maxY / 2));
     }
     
@@ -102,7 +104,7 @@ function GameEngine(uiManager, maxX, maxY) {
         currentFigure.setCoords(coords.x - 1, coords.y);
 
         paintFigure(currentFigure);
-        checkFigureFallen();
+        processFigureFallen();
     }
 
     function isFieldEmpty(x, y) {
@@ -117,7 +119,7 @@ function GameEngine(uiManager, maxX, maxY) {
         return field[x][y] === false;
     }
 
-    function markField(x, y) {
+    function markFieldWithCurrentColor(x, y) {
         if (x < 0 || field[x] === false || y < 0) {
             return;
         }
@@ -171,7 +173,7 @@ function GameEngine(uiManager, maxX, maxY) {
         }
     }
 
-    function checkFieldsForRemoving() {
+    function checkAndRemoveFilledLines() {
         var stones = currentFigure.getCurrentStones();
         var indexes = stones.map(function(stone) {
             return stone.x;
@@ -181,7 +183,7 @@ function GameEngine(uiManager, maxX, maxY) {
         uiManager.fillWholeSpace(field);
     }
 
-    function checkFigureFallen() {
+    function processFigureFallen() {
         var coords = currentFigure.getCoords();
         var stones = currentFigure.getCurrentStones();
 
@@ -192,11 +194,10 @@ function GameEngine(uiManager, maxX, maxY) {
         }
 
         stones.forEach(function(stone) {
-            markField(coords.x + stone.x, coords.y + stone.y);
+            markFieldWithCurrentColor(coords.x + stone.x, coords.y + stone.y);
         });
 
-        console.log('new');
-        checkFieldsForRemoving();
+        checkAndRemoveFilledLines();
         generateNewFigure();
     }
 
