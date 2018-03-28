@@ -31,7 +31,7 @@ function GameEngine(uiManager, maxX, maxY) {
     function generateNewFigure(x, y) {
         var index = Utils.generateRandom(FIGURES.length);
         console.log('Index: ' + index);
-        currentFigure = new FIGURES[index](maxX - 3, Math.floor(maxY / 2));
+        currentFigure = new FIGURES[index](maxX - 2, Math.floor(maxY / 2));
     }
     
     function paintFigure(figure) {
