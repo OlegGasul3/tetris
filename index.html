@@ -7,15 +7,24 @@
     <script src="js/Figures.js"></script>
     <script src="js/Utils.js"></script>
     <script src="js/Images.js"></script>
+    <style>
+        .frameWindow {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 90vh;
+            background-color: aliceblue;
+        }
+    </style>
 </head>
 
-<body onload="init()" bgcolor="#f5f5dc">
+<body class="frameWindow" onload="init()">
     <canvas id="canvas"></canvas>
 
     <script>
-        var maxX = 26;
-        var maxY = 16;
-        var delay = 800;
+        var maxX = 33;
+        var maxY = 20;
+        var delay = 650;
 
         var uiManager = new UIManager(document.getElementById("canvas"), maxX, maxY);
         var gameEngine = new GameEngine(uiManager, maxX, maxY, delay);
