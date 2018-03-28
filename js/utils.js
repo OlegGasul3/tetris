@@ -1,5 +1,5 @@
 class Utils {
     static generateRandom(value) {
-        return Math.floor(Math.random() * value) - 1;
+        return Math.floor(Math.random() * value);
     }
 }

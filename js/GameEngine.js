@@ -1,5 +1,5 @@
 function GameEngine(uiManager, maxX, maxY) {
-    var FIGURES = [LineFigure, PointFigure, AxeFigure, CubeFigure];
+    var FIGURES = [LineFigure, PointFigure, AxeFigure, CubeFigure, TriangleFigure, LadderRFigure, LadderLFigure];
 
     var field = [];
 
@@ -8,7 +8,7 @@ function GameEngine(uiManager, maxX, maxY) {
             field[i] = [];
 
             for (var j = 0; j < maxX; j++) {
-                field[i][j] = undefined;
+                field[i][j] = false;
             }
         }
     }
@@ -16,19 +16,22 @@ function GameEngine(uiManager, maxX, maxY) {
     var currentFigure = null;
 
     this.start = function() {
-        currentFigure = new AxeFigure(maxX, Math.floor(maxY / 2));
+        initField();
+        generateNewFigure();
         paintFigure(currentFigure);
 
         setInterval(function() {
             removeFigure(currentFigure);
+            checkFigureFallen();
             moveDown();
             paintFigure(currentFigure);
         }, 1000);
     };
     
     function generateNewFigure(x, y) {
-        var index = Math.floor(Math.random() * Utils.generateRandom(FIGURES.length - 1));
-        new FIGURES[index](x, y);
+        var index = Utils.generateRandom(FIGURES.length);
+        console.log('Index: ' + index);
+        currentFigure = new FIGURES[index](maxX - 3, Math.floor(maxY / 2));
     }
     
     function paintFigure(figure) {
@@ -52,17 +55,22 @@ function GameEngine(uiManager, maxX, maxY) {
     }
 
     function rotateFigure() {
+        if (!canRotate()) {
+            return;
+        }
+
         removeFigure(currentFigure);
         currentFigure.rotate();
         paintFigure(currentFigure);
     }
 
     function moveLeft() {
-        var coords = currentFigure.getCoords();
-        var newY = coords.y - 1;
-        if (newY < 0 || newY >= maxY) {
+        if (!canMove(0, -1)) {
             return;
         }
+
+        var coords = currentFigure.getCoords();
+        var newY = coords.y - 1;
 
         removeFigure(currentFigure);
         currentFigure.setCoords(coords.x, coords.y - 1);
@@ -70,14 +78,11 @@ function GameEngine(uiManager, maxX, maxY) {
     }
 
     function moveRight() {
-        var coords = currentFigure.getCoords();
-        var newY = coords.y + 1;
-        var borderY = Math.max.apply(Math, currentFigure.getCurrentStones().map(function(stone) {
-            return stone.y;
-        }));
-        if (newY < 0 || (newY + borderY) >= maxY) {
+        if (!canMove(0, 1)) {
             return;
         }
+        var coords = currentFigure.getCoords();
+        var newY = coords.y + 1;
 
         removeFigure(currentFigure);
         currentFigure.setCoords(coords.x, newY);
@@ -85,10 +90,70 @@ function GameEngine(uiManager, maxX, maxY) {
     }
 
     function moveDown() {
+        if (!canMove(-1, 0)) {
+            return;
+        }
+
         var coords = currentFigure.getCoords();
         removeFigure(currentFigure);
         currentFigure.setCoords(coords.x - 1, coords.y);
         paintFigure(currentFigure);
+        checkFigureFallen();
+    }
+
+    function isFieldEmpty(x, y) {
+        if (x < 0 || x >= maxX || y < 0 || y >= maxY) {
+            return false;
+        }
+
+        if (!field[x]) {
+            return true;
+        }
+
+        return !field[x][y];
+    }
+
+    function markField(x, y) {
+        if (x < 0 || !field[x] || y < 0) {
+            return;
+        }
+
+        field[x][y] = true;
+    }
+
+    function checkFigureFallen() {
+        var coords = currentFigure.getCoords();
+        var stones = currentFigure.getCurrentStones();
+
+        if (stones.every(function(stone) {
+            return isFieldEmpty(coords.x + stone.x - 1, coords.y + stone.y)
+        })) {
+            return;
+        }
+
+        stones.forEach(function(stone) {
+            markField(coords.x + stone.x, coords.y + stone.y);
+        });
+
+        console.log('new');
+
+        generateNewFigure();
+    }
+
+    function canRotate() {
+        var coords = currentFigure.getCoords();
+        var stones = currentFigure.getRotateStones();
+        return stones.every(function(stone) {
+            return isFieldEmpty(coords.x + stone.x, coords.y + stone.y)
+        });
+    }
+
+    function canMove(xDiff, yDiff) {
+        var coords = currentFigure.getCoords();
+        var stones = currentFigure.getCurrentStones();
+        return stones.every(function(stone) {
+            return isFieldEmpty(coords.x + stone.x + xDiff, coords.y + stone.y + yDiff)
+        });
     }
 
     document.onkeydown = function(e) {
