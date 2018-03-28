@@ -11,15 +11,13 @@ function UIManager(viewport, maxX, maxY) {
     ctx.fill();
 
     var background = new Image();
-    background.src = "./images/background.png";
+    background.src = Images.background();
 
-    var images = [];
-    for (var i = 0; i <= 6; i++) {
+    var images = Images.sources().map(function(source) {
         var image = new Image();
-        image.src = "./images/" + i + ".png";
-
-        images.push(image);
-    }
+        image.src = source;
+        return image;
+    });
 
     function fillWholeField() {
         for (var x = 0; x < maxX; x++) {
@@ -48,6 +46,16 @@ function UIManager(viewport, maxX, maxY) {
 
     this.paintStone = function(x, y, color) {
         drawImage(images[color], x, y);
+    };
+
+    this.fillWholeSpace = function(field) {
+        for (var i = 0; i < field.length; i++) {
+            var row = field[i];
+            for (var j = 0; j < row.length; j++) {
+                var color = field[i][j];
+                drawImage(color !== false ? images[color] : background, i, j);
+            }
+        }
     };
 
     return this;

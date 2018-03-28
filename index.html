@@ -6,14 +6,15 @@
     <script src="./js/UIManager.js"></script>
     <script src="./js/figures.js"></script>
     <script src="./js/utils.js"></script>
+    <script src="./js/images.js"></script>
 </head>
 
 <body onload="init()" bgcolor="#f5f5dc">
     <canvas id="canvas"></canvas>
 
     <script>
-        var maxX = 36;
-        var maxY = 22;
+        var maxX = 22;
+        var maxY = 14;
 
         var uiManager = new UIManager(document.getElementById("canvas"), maxX, maxY);
         var gameEngine = new GameEngine(uiManager, maxX, maxY);

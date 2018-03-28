@@ -7,7 +7,7 @@ function GameEngine(uiManager, maxX, maxY) {
         for (var i = 0; i < maxX; i++) {
             field[i] = [];
 
-            for (var j = 0; j < maxX; j++) {
+            for (var j = 0; j < maxY; j++) {
                 field[i][j] = false;
             }
         }
@@ -25,7 +25,7 @@ function GameEngine(uiManager, maxX, maxY) {
             checkFigureFallen();
             moveDown();
             paintFigure(currentFigure);
-        }, 1000);
+        }, 800);
     };
     
     function generateNewFigure(x, y) {
@@ -38,20 +38,18 @@ function GameEngine(uiManager, maxX, maxY) {
         var coords = figure.getCoords();
 
         var stones = figure.getCurrentStones();
-        for (var i = 0; i < stones.length; i++) {
-            var stone = stones[i];
+        stones.forEach(function(stone) {
             uiManager.paintStone(coords.x + stone.x, coords.y + stone.y, figure.getColor());
-        }
+        });
     }
 
     function removeFigure(figure) {
         var coords = figure.getCoords();
 
         var stones = figure.getCurrentStones();
-        for (var i = 0; i < stones.length; i++) {
-            var stone = stones[i];
+        stones.forEach(function(stone) {
             uiManager.clearStone(coords.x + stone.x, coords.y + stone.y);
-        }
+        });
     }
 
     function rotateFigure() {
@@ -96,7 +94,9 @@ function GameEngine(uiManager, maxX, maxY) {
 
         var coords = currentFigure.getCoords();
         removeFigure(currentFigure);
+
         currentFigure.setCoords(coords.x - 1, coords.y);
+
         paintFigure(currentFigure);
         checkFigureFallen();
     }
@@ -106,7 +106,7 @@ function GameEngine(uiManager, maxX, maxY) {
             return false;
         }
 
-        if (!field[x]) {
+        if (field[x] === false) {
             return true;
         }
 
@@ -114,11 +114,35 @@ function GameEngine(uiManager, maxX, maxY) {
     }
 
     function markField(x, y) {
-        if (x < 0 || !field[x] || y < 0) {
+        if (x < 0 || field[x] === false || y < 0) {
             return;
         }
 
-        field[x][y] = true;
+        field[x][y] = currentFigure.getColor();
+    }
+
+    function checkFieldsForRemoving() {
+        var stones = currentFigure.getCurrentStones();
+        var indexes = stones.map(function(stone) {
+            return stone.x;
+        }).sort();
+
+        var fullLine = field[indexes[0]].every(function(item) {
+            return item !== false;
+        });
+
+        if (fullLine) {
+            console.log('fullLine');
+            field.splice(indexes[0], 1);
+
+            var index = field.length;
+            field[index] = [];
+            for (var j = 0; j < maxY; j++) {
+                field[index][j] = false;
+            }
+
+            uiManager.fillWholeSpace(field);
+        }
     }
 
     function checkFigureFallen() {
@@ -136,7 +160,7 @@ function GameEngine(uiManager, maxX, maxY) {
         });
 
         console.log('new');
-
+        checkFieldsForRemoving();
         generateNewFigure();
     }
 
