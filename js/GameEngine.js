@@ -131,7 +131,7 @@ function GameEngine(uiManager, maxX, maxY, delay) {
         }
     }
 
-    function removeFilledRows(indexes) {
+    function removeFilledLines(indexes) {
         var min = indexes[0];
         var max = indexes[indexes.length - 1];
 
@@ -173,7 +173,7 @@ function GameEngine(uiManager, maxX, maxY, delay) {
         var indexes = stones.map(function(stone) {
             return coords.x + stone.x;
         }).sort();
-        removeFilledRows(indexes);
+        removeFilledLines(indexes);
 
         uiManager.fillWholeSpace(field);
     }
