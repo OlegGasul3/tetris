@@ -109,11 +109,7 @@ function GameEngine(uiManager, maxX, maxY, delay) {
             return false;
         }
 
-        if (field[x] === false) {
-            return true;
-        }
-
-        return field[x][y] === false;
+        return field[x] === false ? true : field[x][y] === false;
     }
 
     function markFieldWithCurrentColor(x, y) {
