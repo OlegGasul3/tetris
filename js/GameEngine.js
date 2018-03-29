@@ -85,8 +85,7 @@ function GameEngine(uiManager, maxX, maxY, delay) {
         }
 
         var coords = currentFigure.getCoords();
-        var newY = coords.y - 1;
-
+        
         removeFigure(currentFigure);
         currentFigure.setCoords(coords.x, coords.y - 1);
         paintFigure(currentFigure);
@@ -153,12 +152,11 @@ function GameEngine(uiManager, maxX, maxY, delay) {
                 count++;
             } else if (start >= 0) {
                 field.splice(start - decr, count);
-                decr += count;
-                start = -1;
-
                 fillUpperLinesEmpty(count);
 
+                decr += count;
                 count = 0;
+                start = -1;
             }
         }
 
