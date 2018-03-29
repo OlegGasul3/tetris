@@ -10,3 +10,5 @@ Use **&uarr;** for rotating the figure.
 **&darr;** increases the rate of falling.
 
 Pressing **(space)** will move figure to the bottom.
+
+![Screenshot](demo.png)
