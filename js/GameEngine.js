@@ -131,15 +131,12 @@ function GameEngine(uiManager, maxX, maxY, delay) {
         }
     }
 
-    function removeFilledLines(indexes) {
-        var min = indexes[0];
-        var max = indexes[indexes.length - 1];
-
+    function removeFilledLines(minIndex, maxIndex) {
         var decr = 0;
         var count = 0;
         var start = -1;
 
-        for (var i = min; i <= max; i++) {
+        for (var i = minIndex; i <= maxIndex; i++) {
             var index = i - decr;
 
             var lineFilled = field[index].every(function(item) {
@@ -170,10 +167,12 @@ function GameEngine(uiManager, maxX, maxY, delay) {
     function checkAndRemoveFilledLines() {
         var coords = currentFigure.getCoords();
         var stones = currentFigure.getCurrentStones();
-        var indexes = stones.map(function(stone) {
-            return coords.x + stone.x;
-        }).sort();
-        removeFilledLines(indexes);
+
+        var first = coords.x + stones[0].x;
+        var minIndex = stones.reduce((min, stone) => Math.min(min, coords.x + stone.x), first);
+        var maxIndex = stones.reduce((max, stone) => Math.max(max, coords.x + stone.x), first);
+
+        removeFilledLines(minIndex, maxIndex);
 
         uiManager.fillWholeSpace(field);
     }
