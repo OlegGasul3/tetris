@@ -3,8 +3,8 @@
 ## Usage
 Copy all files in one folder and open **index.html**
 
-Use **&larr;** and **&rarr;** to move left and right.
+Use **&larr;** and **&rarr;** for moving figure to the left and to the right.
 
-Use **&uarr;** for rotating.
+Use **&uarr;** for rotating the figure.
 
-**&darr;** increases the rate of fall.
+**&darr;** increases the rate of falling.
