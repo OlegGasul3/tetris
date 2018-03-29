@@ -28,7 +28,7 @@ function GameEngine(uiManager, maxX, maxY, delay) {
 
     function startMainLoop() {
         generateNewFigure();
-        paintFigure(currentFigure);
+        paintFigure();
 
         if (mainLoop) {
             clearInterval(mainLoop);
@@ -38,7 +38,7 @@ function GameEngine(uiManager, maxX, maxY, delay) {
             removeFigure(currentFigure);
             processFigureFallen();
             moveDown();
-            paintFigure(currentFigure);
+            paintFigure();
         }, delay);
     }
 
@@ -52,12 +52,12 @@ function GameEngine(uiManager, maxX, maxY, delay) {
         }
     }
     
-    function paintFigure(figure) {
-        var coords = figure.getCoords();
+    function paintFigure() {
+        var coords = currentFigure.getCoords();
 
-        var stones = figure.getCurrentStones();
+        var stones = currentFigure.getCurrentStones();
         stones.forEach(function(stone) {
-            uiManager.paintStone(coords.x + stone.x, coords.y + stone.y, figure.getColor());
+            uiManager.paintStone(coords.x + stone.x, coords.y + stone.y, currentFigure.getColor());
         });
     }
 
@@ -77,7 +77,7 @@ function GameEngine(uiManager, maxX, maxY, delay) {
 
         removeFigure(currentFigure);
         currentFigure.rotate();
-        paintFigure(currentFigure);
+        paintFigure();
     }
 
     function moveLeft() {
@@ -89,7 +89,7 @@ function GameEngine(uiManager, maxX, maxY, delay) {
         
         removeFigure(currentFigure);
         currentFigure.setCoords(coords.x, coords.y - 1);
-        paintFigure(currentFigure);
+        paintFigure();
     }
 
     function moveRight() {
@@ -101,7 +101,7 @@ function GameEngine(uiManager, maxX, maxY, delay) {
 
         removeFigure(currentFigure);
         currentFigure.setCoords(coords.x, newY);
-        paintFigure(currentFigure);
+        paintFigure();
     }
 
     function isFieldEmpty(x, y) {
@@ -256,7 +256,7 @@ function GameEngine(uiManager, maxX, maxY, delay) {
                     var coords = currentFigure.getCoords();
                     removeFigure(currentFigure);
                     currentFigure.setCoords(coords.x - 1, coords.y);
-                    paintFigure(currentFigure);
+                    paintFigure();
                 }
                 processFigureFallen();
                 break;
