@@ -236,9 +236,9 @@ function GameEngine(uiManager, maxX, maxY, delay) {
             return;
         }
         if (e.keyCode == '38') {
-            rotateFigure(currentFigure);
+            rotateFigure();
         } else if (e.keyCode == '37') {
-            moveLeft(currentFigure);
+            moveLeft();
         } else if (e.keyCode == '39') {
             moveRight();
         } else if (e.keyCode == '40') {
