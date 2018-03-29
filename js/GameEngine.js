@@ -243,6 +243,14 @@ function GameEngine(uiManager, maxX, maxY, delay) {
             moveRight();
         } else if (e.keyCode == '40') {
             moveDown();
+        } else if (e.keyCode == '32') {
+            while (canMove(-1, 0)) {
+                var coords = currentFigure.getCoords();
+                removeFigure(currentFigure);
+                currentFigure.setCoords(coords.x - 1, coords.y);
+                paintFigure(currentFigure);
+            }
+            processFigureFallen();
         }
     };
 
