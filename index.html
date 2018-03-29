@@ -18,7 +18,7 @@
     </style>
 </head>
 
-<body class="frameWindow" onload="init()">
+<body class="frameWindow" onload="onload()">
     <canvas id="canvas"></canvas>
 
     <script>
@@ -29,8 +29,7 @@
         var uiManager = new UIManager(document.getElementById("canvas"), maxX, maxY);
         var gameEngine = new GameEngine(uiManager, maxX, maxY, delay);
 
-        function init() {
-            uiManager.init();
+        function onload() {
             gameEngine.start();
         }
     </script>

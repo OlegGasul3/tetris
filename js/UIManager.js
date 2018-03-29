@@ -12,23 +12,11 @@ function UIManager(viewport, maxX, maxY) {
     ctx.canvas.width = maxY * IMAGE_SIZE;
     ctx.canvas.height = maxX * IMAGE_SIZE;
 
-    function fillBackground() {
-        for (var x = 0; x < maxX; x++) {
-            for (var y = 0; y < maxY; y++) {
-                drawImage(BACKGROUND, x, y);
-            }
-        }
-    }
-
     function drawImage(image, x, y) {
         var realX = y * IMAGE_SIZE;
         var realY = (maxX - x - 1) * IMAGE_SIZE;
         ctx.drawImage(image, realX, realY);
     }
-
-    this.init = function() {
-        fillBackground();
-    };
 
     this.clearStone = function(x, y) {
         drawImage(BACKGROUND, x, y);
@@ -42,7 +30,7 @@ function UIManager(viewport, maxX, maxY) {
         for (var i = 0; i < field.length; i++) {
             var row = field[i];
             for (var j = 0; j < row.length; j++) {
-                var color = field[i][j];
+                var color = row[j];
                 drawImage(color !== false ? IMAGES[color] : BACKGROUND, i, j);
             }
         }

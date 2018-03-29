@@ -14,6 +14,8 @@ function GameEngine(uiManager, maxX, maxY, delay) {
                 field[i][j] = false;
             }
         }
+
+        uiManager.fillWholeSpace(field);
     }
 
     var currentFigure = null;
@@ -46,7 +48,6 @@ function GameEngine(uiManager, maxX, maxY, delay) {
 
         if (isFigureFallen()) {
             initField();
-            uiManager.fillWholeSpace(field);
             startMainLoop();
         }
     }
