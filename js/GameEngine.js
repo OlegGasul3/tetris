@@ -235,22 +235,33 @@ function GameEngine(uiManager, maxX, maxY, delay) {
         if (!currentFigure) {
             return;
         }
-        if (e.keyCode == '38') {
-            rotateFigure();
-        } else if (e.keyCode == '37') {
-            moveLeft();
-        } else if (e.keyCode == '39') {
-            moveRight();
-        } else if (e.keyCode == '40') {
-            moveDown();
-        } else if (e.keyCode == '32') {
-            while (canMove(-1, 0)) {
-                var coords = currentFigure.getCoords();
-                removeFigure(currentFigure);
-                currentFigure.setCoords(coords.x - 1, coords.y);
-                paintFigure(currentFigure);
-            }
-            processFigureFallen();
+
+        switch (e.keyCode) {
+            case 38:
+                rotateFigure();
+                break;
+
+            case 37:
+                moveLeft();
+                break;
+
+            case 39:
+                moveRight();
+                break;
+
+            case 40:
+                moveDown();
+                break;
+
+            case 32:
+                while (canMove(-1, 0)) {
+                    var coords = currentFigure.getCoords();
+                    removeFigure(currentFigure);
+                    currentFigure.setCoords(coords.x - 1, coords.y);
+                    paintFigure(currentFigure);
+                }
+                processFigureFallen();
+                break;
         }
     };
 
