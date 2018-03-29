@@ -100,10 +100,9 @@ function GameEngine(uiManager, maxX, maxY, delay) {
             return;
         }
         var coords = currentFigure.getCoords();
-        var newY = coords.y + 1;
 
         removeFigure();
-        currentFigure.setCoords(coords.x, newY);
+        currentFigure.setCoords(coords.x, coords.y + 1);
         paintFigure();
     }
 
