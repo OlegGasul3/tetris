@@ -41,7 +41,6 @@ class BaseFigure {
         if (this.currentPosition >= this.stones.length) {
             this.currentPosition = 0;
         }
-        return this.stones[this.currentPosition];
     }
 }
 
