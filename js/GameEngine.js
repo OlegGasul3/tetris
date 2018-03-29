@@ -35,10 +35,13 @@ function GameEngine(uiManager, maxX, maxY, delay) {
         }
 
         mainLoop = setInterval(function() {
-            removeFigure(currentFigure);
-            processFigureFallen();
-            moveDown();
-            paintFigure();
+            removeFigure();
+            if (isFigureFallen()) {
+                processFigureFallen();
+            } else {
+                moveDown();
+                paintFigure();
+            }
         }, delay);
     }
 
@@ -61,10 +64,10 @@ function GameEngine(uiManager, maxX, maxY, delay) {
         });
     }
 
-    function removeFigure(figure) {
-        var coords = figure.getCoords();
+    function removeFigure() {
+        var coords = currentFigure.getCoords();
 
-        var stones = figure.getCurrentStones();
+        var stones = currentFigure.getCurrentStones();
         stones.forEach(function(stone) {
             uiManager.clearStone(coords.x + stone.x, coords.y + stone.y);
         });
@@ -75,7 +78,7 @@ function GameEngine(uiManager, maxX, maxY, delay) {
             return;
         }
 
-        removeFigure(currentFigure);
+        removeFigure();
         currentFigure.rotate();
         paintFigure();
     }
@@ -87,7 +90,7 @@ function GameEngine(uiManager, maxX, maxY, delay) {
 
         var coords = currentFigure.getCoords();
         
-        removeFigure(currentFigure);
+        removeFigure();
         currentFigure.setCoords(coords.x, coords.y - 1);
         paintFigure();
     }
@@ -99,7 +102,7 @@ function GameEngine(uiManager, maxX, maxY, delay) {
         var coords = currentFigure.getCoords();
         var newY = coords.y + 1;
 
-        removeFigure(currentFigure);
+        removeFigure();
         currentFigure.setCoords(coords.x, newY);
         paintFigure();
     }
@@ -221,7 +224,7 @@ function GameEngine(uiManager, maxX, maxY, delay) {
         }
 
         var coords = currentFigure.getCoords();
-        removeFigure(currentFigure);
+        removeFigure();
 
         currentFigure.setCoords(coords.x - 1, coords.y);
 
@@ -254,7 +257,7 @@ function GameEngine(uiManager, maxX, maxY, delay) {
             case 32:
                 while (canMove(-1, 0)) {
                     var coords = currentFigure.getCoords();
-                    removeFigure(currentFigure);
+                    removeFigure();
                     currentFigure.setCoords(coords.x - 1, coords.y);
                     paintFigure();
                 }
