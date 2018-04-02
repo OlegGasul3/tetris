@@ -1,12 +1,12 @@
 function UIManager(viewport, maxX, maxY) {
     const IMAGE_SIZE = 16;
-    const IMAGES = Images.sources().map(function(source) {
+    const IMAGES = Images.getImageByColorIndex().map(function(source) {
         var image = new Image();
         image.src = source;
         return image;
     });
     const BACKGROUND = new Image();
-    BACKGROUND.src = Images.background();
+    BACKGROUND.src = Images.getBackground();
 
     var ctx = viewport.getContext("2d");
     ctx.canvas.width = maxY * IMAGE_SIZE;
