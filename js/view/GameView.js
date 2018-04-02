@@ -1,11 +1,11 @@
 class GameView {
     constructor(viewport, maxX, maxY) {
-        this.context = viewport.getContext("2d");
-        this.context.canvas.width = maxY * Images.SIZE;
-        this.context.canvas.height = maxX * Images.SIZE;
-
-        this.maxX = maxX;
+        this.maxX = maxX - Consts.INVISIBLE_ROWS;
         this.maxY = maxY;
+
+        this.context = viewport.getContext("2d");
+        this.context.canvas.width = this.maxY * Images.SIZE;
+        this.context.canvas.height = this.maxX * Images.SIZE;
 
         this.initImages();
         this.initEventHandlers();
@@ -37,8 +37,17 @@ class GameView {
             });
         });
 
-        Events.addListener('clear.field', function() {
+        Events.addListener('clear.cells', function() {
             self.clearField();
+        });
+
+        Events.addListener('fill.cells', function(field) {
+            for (let i = 0; i < field.length; i++) {
+                let row = field[i];
+                for (let j = 0; j < row.length; j++) {
+                    self.drawImage({x: i, y: j}, row[j] ? self.images[row[j]] : self.backgroundImage);
+                }
+            }
         });
     }
 

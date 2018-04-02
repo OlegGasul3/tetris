@@ -1,5 +1,9 @@
 class Consts {
     static get FALLING_DELAY() {
-        return 250;
+        return 450;
+    }
+
+    static get INVISIBLE_ROWS() {
+        return 4;
     }
 }

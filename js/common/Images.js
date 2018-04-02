@@ -15,10 +15,6 @@ class Images {
         ]
     }
 
-    static getImageByColorIndex(color) {
-        return Images.SOURCES[color];
-    };
-
     static get BACKGROUND() {
         return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAB3RJTUUH3gYaDDM59nCB+AAAABd0RVh0U29mdHdhcmUAR0xEUE5HIHZlciAzLjRxhaThAAAACHRwTkdHTEQzAAAAAEqAKR8AAAAEZ0FNQQAAsY8L/GEFAAAABmJLR0QA/wD/AP+gvaeTAAAABnRSTlMAzADMAMxIJOP0AAAAW0lEQVR4nGMwNTYuSswiEgEVMxCvGoKgGsL8gvEjuDImBhiQERbHgyT4+SFqEBqIBKRpePL2JWkaSHYSyTYwkOqHQa0BEpd4EEIHSSkPmJYYIMkbOXnhSYtAxQDb3WWpUAR7nAAAAABJRU5ErkJggg==';
     }

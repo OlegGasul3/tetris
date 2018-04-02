@@ -3,7 +3,7 @@ class GameEngine {
         this.fieldModel = fieldModel;
         this.figureFactory = figureFactory;
 
-        this.currentFigure = undefined;
+        this.currentFigure = null;
     }
 
     startMainLoop() {
@@ -18,7 +18,7 @@ class GameEngine {
                 self.currentFigure.setCoords(coords);
 
                 var stones = self.currentFigure.getStones();
-                if (!self.fieldModel.areStonesEmpty(stones)) {
+                if (!self.fieldModel.areCellsEmpty(stones)) {
                     // Game over
                     clearInterval(self.interval);
                     return;
@@ -26,16 +26,12 @@ class GameEngine {
             }
 
             var stones = self.currentFigure.getShiftStones(-1, 0);
-            if (self.fieldModel.areStonesEmpty(stones)) {
-                self.fieldModel.removeStones(self.currentFigure.getStones());
-
-                var coords = self.currentFigure.getCoords();
-                coords.x -= 1;
-                self.currentFigure.setCoords(coords);
-
+            if (self.fieldModel.areCellsEmpty(stones)) {
+                Events.fireEvent('clear.stones', [self.currentFigure.getStones()]);
+                self.currentFigure.moveDown();
                 Events.fireEvent('fill.stones', [self.currentFigure.getStones(), self.currentFigure.getColor()]);
             } else {
-                self.fieldModel.freezeStones(self.currentFigure.getStones(), self.currentFigure.getColor());
+                self.fieldModel.freezeCells(self.currentFigure.getStones(), self.currentFigure.getColor());
 
                 self.currentFigure = null;
             }
@@ -43,7 +39,18 @@ class GameEngine {
     }
 
     rotate() {
+        if (!this.currentFigure) {
+            return;
+        }
 
+        var stones = this.currentFigure.getRotateStones();
+        if (!this.fieldModel.areCellsEmpty(stones)) {
+            return;
+        }
+
+        Events.fireEvent('clear.stones', [this.currentFigure.getStones()]);
+        this.currentFigure.rotate();
+        Events.fireEvent('fill.stones', [this.currentFigure.getStones(), this.currentFigure.getColor()]);
     }
 
     moveLeft() {
@@ -51,21 +58,64 @@ class GameEngine {
             return;
         }
 
-        var coords = this.currentFigure.getCoords();
-        coords.x -= 1;
-
-        if (!this.fieldModel.canPlaceFigure(this.currentFigure, coords)) {
+        var stones = this.currentFigure.getShiftStones(0, -1);
+        if (!this.fieldModel.areCellsEmpty(stones)) {
             return;
         }
 
-        this.currentFigure.setCoords()
+        Events.fireEvent('clear.stones', [this.currentFigure.getStones()]);
+        this.currentFigure.shiftLeft();
+        Events.fireEvent('fill.stones', [this.currentFigure.getStones(), this.currentFigure.getColor()]);
     }
 
     moveRight() {
+        if (!this.currentFigure) {
+            return;
+        }
 
+        var stones = this.currentFigure.getShiftStones(0, 1);
+        if (!this.fieldModel.areCellsEmpty(stones)) {
+            return;
+        }
+
+        Events.fireEvent('clear.stones', [this.currentFigure.getStones()]);
+        this.currentFigure.shiftRight();
+        Events.fireEvent('fill.stones', [this.currentFigure.getStones(), this.currentFigure.getColor()]);
     }
 
     moveDown() {
-        var coords = this.currentFigure.getCoords();
+        if (!this.currentFigure) {
+            return;
+        }
+
+        let stones = this.currentFigure.getShiftStones(-1, 0);
+        if (!this.fieldModel.areCellsEmpty(stones)) {
+            return;
+        }
+
+        Events.fireEvent('clear.stones', [this.currentFigure.getStones()]);
+        this.currentFigure.moveDown();
+        Events.fireEvent('fill.stones', [this.currentFigure.getStones(), this.currentFigure.getColor()]);
+    }
+
+    fallDown() {
+        if (!this.currentFigure) {
+            return;
+        }
+
+        let canMove = true;
+        while (canMove) {
+            let stones = this.currentFigure.getShiftStones(-1, 0);
+            canMove = this.fieldModel.areCellsEmpty(stones);
+            if (canMove) {
+                Events.fireEvent('clear.stones', [this.currentFigure.getStones()]);
+                this.currentFigure.moveDown();
+            } else {
+                Events.fireEvent('fill.stones', [this.currentFigure.getStones(), this.currentFigure.getColor()]);
+                this.fieldModel.freezeCells(this.currentFigure.getStones(), this.currentFigure.getColor());
+
+                this.currentFigure = null;
+            }
+        }
     }
 }

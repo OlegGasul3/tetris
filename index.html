@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+
+    <script src="./js/model/Figures.js"></script>
+
     <script src="./js/model/GameEngine.js"></script>
     <script src="./js/model/FieldModel.js"></script>
     <script src="./js/model/FigureFactory.js"></script>
@@ -11,17 +14,9 @@
     <script src="./js/common/Images.js"></script>
     <script src="./js/common/Utils.js"></script>
 
-    <script src="./js/model/figures/BaseFigure.js"></script>
-    <script src="./js/model/figures/AxeFigure.js"></script>
-    <script src="./js/model/figures/Axe2Figure.js"></script>
-    <script src="./js/model/figures/CubeFigure.js"></script>
-    <script src="./js/model/figures/LadderLFigure.js"></script>
-    <script src="./js/model/figures/LadderRFigure.js"></script>
-    <script src="./js/model/figures/LineFigure.js"></script>
-    <script src="./js/model/figures/PointFigure.js"></script>
-    <script src="./js/model/figures/TriangleFigure.js"></script>
-
     <script src="./js/view/GameView.js"></script>
+
+    <script src="./js/GameController.js"></script>
 
     <style>
         .frameWindow {
@@ -39,14 +34,15 @@
 
     <script>
         function onload() {
-            var maxX = 28;
-            var maxY = 17;
+            var maxX = 24;
+            var maxY = 12;
 
             new GameView(document.getElementById("canvas"), maxX, maxY);
             var fieldModel = new FieldModel(maxX, maxY);
             var figureFactory = new FigureFactory();
 
             var gameEngine = new GameEngine(fieldModel, figureFactory);
+            new GameController(gameEngine);
             gameEngine.startMainLoop()
         }
     </script>
