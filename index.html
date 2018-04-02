@@ -2,11 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <script src="./js/GameEngine.js"></script>
-    <script src="./js/UIManager.js"></script>
-    <script src="js/Figures.js"></script>
-    <script src="js/Utils.js"></script>
-    <script src="js/common/Images.js"></script>
+    <script src="./js/model/GameEngine.js"></script>
+    <script src="./js/model/FieldModel.js"></script>
+    <script src="./js/model/FigureFactory.js"></script>
+
+    <script src="./js/common/Consts.js"></script>
+    <script src="./js/common/Events.js"></script>
+    <script src="./js/common/Images.js"></script>
+    <script src="./js/common/Utils.js"></script>
+
+    <script src="./js/model/figures/BaseFigure.js"></script>
+    <script src="./js/model/figures/AxeFigure.js"></script>
+    <script src="./js/model/figures/Axe2Figure.js"></script>
+    <script src="./js/model/figures/CubeFigure.js"></script>
+    <script src="./js/model/figures/LadderLFigure.js"></script>
+    <script src="./js/model/figures/LadderRFigure.js"></script>
+    <script src="./js/model/figures/LineFigure.js"></script>
+    <script src="./js/model/figures/PointFigure.js"></script>
+    <script src="./js/model/figures/TriangleFigure.js"></script>
+
+    <script src="./js/view/GameView.js"></script>
+
     <style>
         .frameWindow {
             display: flex;
@@ -22,15 +38,16 @@
     <canvas id="canvas"></canvas>
 
     <script>
-        var maxX = 28;
-        var maxY = 17;
-        var delay = 450;
-
-        var uiManager = new UIManager(document.getElementById("canvas"), maxX, maxY);
-        var gameEngine = new GameEngine(uiManager, maxX, maxY, delay);
-
         function onload() {
-            gameEngine.start();
+            var maxX = 28;
+            var maxY = 17;
+
+            new GameView(document.getElementById("canvas"), maxX, maxY);
+            var fieldModel = new FieldModel(maxX, maxY);
+            var figureFactory = new FigureFactory();
+
+            var gameEngine = new GameEngine(fieldModel, figureFactory);
+            gameEngine.startMainLoop()
         }
     </script>
 </body>

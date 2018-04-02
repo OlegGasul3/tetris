@@ -7,27 +7,41 @@ class GameEngine {
     }
 
     startMainLoop() {
-        this.interval = setInterval(this.mainLoop, 650);
-    }
+        this.fieldModel.initField();
 
-    mainLoop() {
-        if (!this.currentFigure) {
-            this.currentFigure = this.figureFactory.generateRandomFigure();
-            if (!this.fieldModel.placeFigureAtTop(this.currentFigure)) {
-                // Game over
-                return;
+        var self = this;
+        this.interval = setInterval(function() {
+            if (!self.currentFigure) {
+                self.currentFigure = self.figureFactory.generateRandomFigure();
+
+                var coords = self.fieldModel.getTopCoords();
+                self.currentFigure.setCoords(coords);
+
+                var stones = self.currentFigure.getStones();
+                if (!self.fieldModel.areStonesEmpty(stones)) {
+                    // Game over
+                    clearInterval(self.interval);
+                    return;
+                }
             }
-        }
 
-        if (this.fieldModel.canMoveDown(this.currentFigure)) {
-            this.fieldModel.moveDown(this.currentFigure);
-        } else {
-            this.fieldModel.freezeFigure(this.currentFigure);
-        }
+            var stones = self.currentFigure.getShiftStones(-1, 0);
+            if (self.fieldModel.areStonesEmpty(stones)) {
+                self.fieldModel.removeStones(self.currentFigure.getStones());
+
+                var coords = self.currentFigure.getCoords();
+                coords.x -= 1;
+                self.currentFigure.setCoords(coords);
+
+                self.fieldModel.fillStones(self.currentFigure.getStones(), self.currentFigure.getColor());
+            } else {
+                self.fieldModel.processRemoveLines();
+            }
+        }, Consts.FALLING_DELAY);
     }
 
     rotate() {
-        
+
     }
 
     moveLeft() {

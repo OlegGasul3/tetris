@@ -1,20 +1,24 @@
 class BaseFigure {
     constructor(stones) {
-        this.stones = stones;
-        this.color = Utils.generateRandom(Images.getImageByColorIndex().length);
+        this.x = 0;
+        this.y = 0;
 
-        this.currentPosition = 0;
+        this.stones = stones;
+        this.color = Utils.generateRandom(Images.SOURCES.length);
+
+        this.rotationIndex = 0;
+    }
+
+    getCoords() {
+        return {
+            x: this.x,
+            y: this.y
+        }
     }
 
     setCoords(x, y) {
         this.x = x;
         this.y = y;
-    }
-
-    getCoords() {
-        return {
-            x: this.x, y: this.y
-        };
     }
 
     getColor() {
@@ -25,25 +29,33 @@ class BaseFigure {
         this.color = color;
     }
 
-    getCurrentStones() {
-        var stones = this.stones[this.currentPosition];
+    getStones() {
+        return this.stones[this.rotationIndex].map((stone) => {
+            return { x: this.x + stone.x, y: this.y + stone.y };
+        });
+    }
 
-        return this.stones[this.currentPosition];
+    getShiftStones(shiftX, shiftY) {
+        return this.stones[this.rotationIndex].map((stone) => {
+            return { x: this.x + stone.x + shiftX, y: this.y + stone.y + shiftY };
+        });
     }
 
     getRotateStones() {
-        var newPosition = this.currentPosition + 1;
-        if (newPosition >= this.stones.length) {
-            newPosition = 0;
+        var rotateIndex = this.rotationIndex + 1;
+        if (rotateIndex >= this.stones.length) {
+            rotateIndex = 0;
         }
 
-        return this.stones[newPosition];
+        return this.stones[rotateIndex].map((stone) => {
+            return { x: this.x + stone.x, y: this.y + stone.y };
+        });
     }
 
     rotate() {
-        this.currentPosition++;
-        if (this.currentPosition >= this.stones.length) {
-            this.currentPosition = 0;
+        this.rotationIndex++;
+        if (this.rotationIndex >= this.stones.length) {
+            this.rotationIndex = 0;
         }
     }
 }

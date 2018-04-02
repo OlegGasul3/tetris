@@ -11,7 +11,7 @@ class FigureFactory {
         var figureClass = FigureFactory.FIGURES[Utils.generateRandom(FigureFactory.FIGURES.length)];
 
         var figure = new figureClass();
-        figure.setColor(Utils.generateRandom(Images.SOURCES));
+        figure.setColor(Utils.generateRandom(Images.SOURCES.length));
 
         return figure;
     }
