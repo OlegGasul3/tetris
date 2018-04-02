@@ -19,27 +19,32 @@ class FieldModel {
 
     getTopCoords() {
         return {
-            x: this.maxX - 4,
+            x: this.maxX - 3,
             y: Math.floor(this.maxY / 2)
         }
     }
 
     areStonesEmpty(stones) {
-        stones.every((stone) => {
-            return stone.x >= 0 && stone.x <= maxX && stone.y >= 0 && stone.y <= maxY && this.field[stone.x][stone.y] === undefined;
+        var self = this;
+        return stones.every((stone) => {
+            return stone.x >= 0 && stone.x <= self.maxX && stone.y >= 0 && stone.y <= self.maxY && self.field[stone.x][stone.y] === undefined;
         });
     }
 
     removeStones(stones) {
-        fillStones(stones, undefined);
+        var self = this;
+        stones.forEach((stone) => {
+            self.field[stone.x][stone.y] = undefined;
+        });
         Events.fireEvent('clear.stones', [stones]);
     }
 
-    fillStones(stones, colorIndex) {
+    freezeStones(stones, colorIndex) {
+        var self = this;
         stones.forEach((stone) => {
-            this.field[stone.x][stone.y] = colorIndex;
+            self.field[stone.x][stone.y] = colorIndex;
         });
-        Events.fireEvent('clear.stones', [stones, colorIndex]);
+        Events.fireEvent('fill.stones', [stones, colorIndex]);
     }
 
     processRemoveLines(from, to) {

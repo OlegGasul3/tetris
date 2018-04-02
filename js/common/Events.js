@@ -20,7 +20,7 @@ class Events {
         }
 
         for (var i in handlers) {
-            handlers[i].apply(args);
+            handlers[i].apply({}, args);
         }
     }
 }

@@ -33,9 +33,11 @@ class GameEngine {
                 coords.x -= 1;
                 self.currentFigure.setCoords(coords);
 
-                self.fieldModel.fillStones(self.currentFigure.getStones(), self.currentFigure.getColor());
+                Events.fireEvent('fill.stones', [self.currentFigure.getStones(), self.currentFigure.getColor()]);
             } else {
-                self.fieldModel.processRemoveLines();
+                self.fieldModel.freezeStones(self.currentFigure.getStones(), self.currentFigure.getColor());
+
+                self.currentFigure = null;
             }
         }, Consts.FALLING_DELAY);
     }

@@ -1,7 +1,6 @@
 class BaseFigure {
     constructor(stones) {
-        this.x = 0;
-        this.y = 0;
+        this.coords = {};
 
         this.stones = stones;
         this.color = Utils.generateRandom(Images.SOURCES.length);
@@ -10,15 +9,11 @@ class BaseFigure {
     }
 
     getCoords() {
-        return {
-            x: this.x,
-            y: this.y
-        }
+        return this.coords;
     }
 
-    setCoords(x, y) {
-        this.x = x;
-        this.y = y;
+    setCoords(coords) {
+        this.coords = coords;
     }
 
     getColor() {
@@ -30,14 +25,16 @@ class BaseFigure {
     }
 
     getStones() {
+        var self = this;
         return this.stones[this.rotationIndex].map((stone) => {
-            return { x: this.x + stone.x, y: this.y + stone.y };
+            return { x: self.coords.x + stone.x, y: self.coords.y + stone.y };
         });
     }
 
     getShiftStones(shiftX, shiftY) {
+        var self = this;
         return this.stones[this.rotationIndex].map((stone) => {
-            return { x: this.x + stone.x + shiftX, y: this.y + stone.y + shiftY };
+            return { x: self.coords.x + stone.x + shiftX, y: self.coords.y + stone.y + shiftY };
         });
     }
 
@@ -47,8 +44,9 @@ class BaseFigure {
             rotateIndex = 0;
         }
 
+        var self = this;
         return this.stones[rotateIndex].map((stone) => {
-            return { x: this.x + stone.x, y: this.y + stone.y };
+            return { x: self.coords.x + stone.x, y: self.coords.y + stone.y };
         });
     }
 

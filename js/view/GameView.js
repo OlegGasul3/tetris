@@ -33,7 +33,7 @@ class GameView {
 
         Events.addListener('fill.stones', function(stones, colorIndex) {
             stones.forEach((stone) => {
-                drawStone(stone, this.images[colorIndex]);
+                self.drawImage(stone, self.images[colorIndex]);
             });
         });
 
@@ -49,13 +49,13 @@ class GameView {
     }
 
     clearStone(stone) {
-        drawImage(stone, this.backgroundImage);
+        this.drawImage(stone, this.backgroundImage);
     }
 
     clearField() {
-        for (let x = 0; x <= this.maxX; x++) {
-            for (let y = 0; y <= this.maxY; y++) {
-                this.drawImage({x: x, y: y}, this.backgroundImage);
+        for (let i = 0; i <= this.maxX; i++) {
+            for (let j = 0; j <= this.maxY; j++) {
+                this.drawImage({x: i, y: j}, this.backgroundImage);
             }
         }
     }
