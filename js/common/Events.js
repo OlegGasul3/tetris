@@ -1,6 +1,18 @@
 class Events {
-    constructor() {
+    static get FILL_CELLS() {
+        return 'fill.stones';
+    }
 
+    static get CLEAR_CELLS() {
+        return 'clear.stones';
+    }
+
+    static get CLEAR_FIELD() {
+        return 'clear.field';
+    }
+
+    static get REPAINT() {
+        return 'repaint.field'
     }
 
     static addListener(eventName, handler) {

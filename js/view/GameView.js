@@ -25,23 +25,23 @@ class GameView {
     initEventHandlers() {
         var self = this;
 
-        Events.addListener('clear.stones', function(stones) {
+        Events.addListener(Events.CLEAR_CELLS, function(stones) {
             stones.forEach((stone) => {
                 self.clearStone(stone);
             });
         });
 
-        Events.addListener('fill.stones', function(stones, colorIndex) {
+        Events.addListener(Events.FILL_CELLS, function(stones, colorIndex) {
             stones.forEach((stone) => {
                 self.drawImage(stone, self.images[colorIndex]);
             });
         });
 
-        Events.addListener('clear.cells', function() {
+        Events.addListener(Events.CLEAR_FIELD, function() {
             self.clearField();
         });
 
-        Events.addListener('fill.cells', function(field) {
+        Events.addListener(Events.REPAINT, function(field) {
             for (var i = 0; i < field.length; i++) {
                 var row = field[i];
                 for (var j = 0; j < row.length; j++) {

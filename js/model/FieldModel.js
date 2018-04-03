@@ -14,7 +14,7 @@ class FieldModel {
             }
         }
 
-        Events.fireEvent('clear.cells');
+        Events.fireEvent(Events.CLEAR_FIELD);
     }
 
     getStartCoords() {
@@ -38,7 +38,7 @@ class FieldModel {
         });
 
         if (this.processRemoveLines(stones) > 0) {
-            Events.fireEvent('fill.cells', [this.cells]);
+            Events.fireEvent(Events.REPAINT, [this.cells]);
         }
     }
 

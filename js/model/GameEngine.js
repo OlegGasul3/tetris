@@ -27,9 +27,9 @@ class GameEngine {
 
             var stones = self.currentFigure.getShiftStones(-1, 0);
             if (self.fieldModel.areCellsEmpty(stones)) {
-                Events.fireEvent('clear.stones', [self.currentFigure.getStones()]);
+                self._fireClearCells();
                 self.currentFigure.moveDown();
-                Events.fireEvent('fill.stones', [self.currentFigure.getStones(), self.currentFigure.getColor()]);
+                self._fireFillCells();
             } else {
                 self.fieldModel.freezeCells(self.currentFigure.getStones(), self.currentFigure.getColor());
 
@@ -48,9 +48,9 @@ class GameEngine {
             return;
         }
 
-        Events.fireEvent('clear.stones', [this.currentFigure.getStones()]);
+        this._fireClearCells();
         this.currentFigure.rotate();
-        Events.fireEvent('fill.stones', [this.currentFigure.getStones(), this.currentFigure.getColor()]);
+        this._fireFillCells();
     }
 
     moveLeft() {
@@ -63,9 +63,9 @@ class GameEngine {
             return;
         }
 
-        Events.fireEvent('clear.stones', [this.currentFigure.getStones()]);
+        this._fireClearCells();
         this.currentFigure.shiftLeft();
-        Events.fireEvent('fill.stones', [this.currentFigure.getStones(), this.currentFigure.getColor()]);
+        this._fireFillCells();
     }
 
     moveRight() {
@@ -78,9 +78,9 @@ class GameEngine {
             return;
         }
 
-        Events.fireEvent('clear.stones', [this.currentFigure.getStones()]);
+        this._fireClearCells();
         this.currentFigure.shiftRight();
-        Events.fireEvent('fill.stones', [this.currentFigure.getStones(), this.currentFigure.getColor()]);
+        this._fireFillCells();
     }
 
     moveDown() {
@@ -93,9 +93,9 @@ class GameEngine {
             return;
         }
 
-        Events.fireEvent('clear.stones', [this.currentFigure.getStones()]);
+        this._fireClearCells();
         this.currentFigure.moveDown();
-        Events.fireEvent('fill.stones', [this.currentFigure.getStones(), this.currentFigure.getColor()]);
+        this._fireFillCells();
     }
 
     fallDown() {
@@ -108,14 +108,22 @@ class GameEngine {
             let stones = this.currentFigure.getShiftStones(-1, 0);
             canMove = this.fieldModel.areCellsEmpty(stones);
             if (canMove) {
-                Events.fireEvent('clear.stones', [this.currentFigure.getStones()]);
+                this._fireClearCells();
                 this.currentFigure.moveDown();
             } else {
-                Events.fireEvent('fill.stones', [this.currentFigure.getStones(), this.currentFigure.getColor()]);
+                this._fireFillCells();
                 this.fieldModel.freezeCells(this.currentFigure.getStones(), this.currentFigure.getColor());
 
                 this.currentFigure = null;
             }
         }
+    }
+
+    _fireFillCells() {
+        Events.fireEvent(Events.FILL_CELLS, [this.currentFigure.getStones(), this.currentFigure.getColor()]);
+    }
+
+    _fireClearCells() {
+        Events.fireEvent(Events.CLEAR_CELLS, [this.currentFigure.getStones()]);
     }
 }
