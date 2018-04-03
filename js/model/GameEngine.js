@@ -14,7 +14,7 @@ class GameEngine {
             if (!self.currentFigure) {
                 self.currentFigure = self.figureFactory.generateRandomFigure();
 
-                var coords = self.fieldModel.getTopCoords();
+                var coords = self.fieldModel.getStartCoords();
                 self.currentFigure.setCoords(coords);
 
                 var stones = self.currentFigure.getStones();

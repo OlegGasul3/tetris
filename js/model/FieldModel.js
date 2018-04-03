@@ -17,9 +17,9 @@ class FieldModel {
         Events.fireEvent('clear.cells');
     }
 
-    getTopCoords() {
+    getStartCoords() {
         return {
-            x: this.maxX - Consts.INVISIBLE_ROWS,
+            x: this.maxX - Consts.INVISIBLE_ROWS - 3,
             y: Math.floor(this.maxY / 2)
         }
     }
@@ -77,17 +77,10 @@ class FieldModel {
                 }
                 count++;
             } else if (start >= 0) {
-                console.log('before');
-                console.dir(this.cells);
-
                 this.cells.splice(start - decr, count);
-
                 fillUpperLinesEmpty(count);
 
-                console.log('after');
                 console.dir(this.cells);
-
-                console.log('==========================');
 
                 decr += count;
                 result += count;
@@ -97,18 +90,12 @@ class FieldModel {
         }
 
         if (start >= 0) {
-            console.log('before');
-            console.dir(this.cells);
-
             this.cells.splice(start - decr, count);
 
             result += count;
             fillUpperLinesEmpty(count);
 
-            console.log('after');
             console.dir(this.cells);
-
-            console.log('==========================');
         }
 
         return result;

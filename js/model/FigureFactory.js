@@ -8,8 +8,7 @@ class FigureFactory {
     }
 
     generateRandomFigure() {
-        // let figureClass = FigureFactory.FIGURES[Utils.generateRandom(FigureFactory.FIGURES.length)];
-        let figureClass = CubeFigure;
+        let figureClass = FigureFactory.FIGURES[Utils.generateRandom(FigureFactory.FIGURES.length)];
 
         let figure = new figureClass();
         figure.setColor(Utils.generateRandom(Images.SOURCES.length));

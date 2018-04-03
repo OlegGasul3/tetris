@@ -42,10 +42,11 @@ class GameView {
         });
 
         Events.addListener('fill.cells', function(field) {
-            for (let i = 0; i < field.length; i++) {
-                let row = field[i];
-                for (let j = 0; j < row.length; j++) {
-                    self.drawImage({x: i, y: j}, row[j] ? self.images[row[j]] : self.backgroundImage);
+            for (var i = 0; i < field.length; i++) {
+                var row = field[i];
+                for (var j = 0; j < row.length; j++) {
+                    var colorIndex = row[j];
+                    self.drawImage({x: i, y: j}, colorIndex !== false ? self.images[colorIndex] : self.backgroundImage);
                 }
             }
         });
