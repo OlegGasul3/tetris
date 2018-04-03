@@ -19,18 +19,23 @@
     <script src="./js/GameController.js"></script>
 
     <style>
+        body {
+            background-color: aliceblue;
+        }
+
         .frameWindow {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 90vh;
-            background-color: aliceblue;
         }
     </style>
 </head>
 
-<body class="frameWindow" onload="onload()">
-    <canvas id="canvas"></canvas>
+<body onload="onload()">
+    <div class="frameWindow">
+        <canvas id="canvas"></canvas>
+    </div>
 
     <script>
         var maxX = 32;
