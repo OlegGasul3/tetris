@@ -19,25 +19,30 @@
     <script src="./js/GameController.js"></script>
 
     <style>
+        body {
+            background-color: aliceblue;
+        }
+
         .frameWindow {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 90vh;
-            background-color: aliceblue;
         }
     </style>
 </head>
 
-<body class="frameWindow" onload="onload()">
-    <canvas id="canvas"></canvas>
+<body onload="onload()">
+    <div class="frameWindow">
+        <canvas id="canvas"></canvas>
+    </div>
 
     <script>
-        function onload() {
-            var maxX = 32;
-            var maxY = 18;
+        var maxX = 32;
+        var maxY = 18;
+        new GameView(document.getElementById("canvas"), maxX, maxY);
 
-            new GameView(document.getElementById("canvas"), maxX, maxY);
+        function onload() {
             var fieldModel = new FieldModel(maxX, maxY);
             var figureFactory = new FigureFactory();
 
