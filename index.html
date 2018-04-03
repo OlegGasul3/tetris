@@ -33,11 +33,11 @@
     <canvas id="canvas"></canvas>
 
     <script>
-        function onload() {
-            var maxX = 32;
-            var maxY = 18;
+        var maxX = 32;
+        var maxY = 18;
+        new GameView(document.getElementById("canvas"), maxX, maxY);
 
-            new GameView(document.getElementById("canvas"), maxX, maxY);
+        function onload() {
             var fieldModel = new FieldModel(maxX, maxY);
             var figureFactory = new FigureFactory();
 
