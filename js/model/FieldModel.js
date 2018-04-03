@@ -43,8 +43,8 @@ class FieldModel {
     }
 
     processRemoveLines(stones) {
-        var from = stones.reduce((min, stone) => Math.min(min, stone.x), stones[0].x);
-        var to = stones.reduce((max, stone) => Math.max(max, stone.x), stones[0].x);
+        var fromIndex = stones.reduce((min, stone) => Math.min(min, stone.x), stones[0].x);
+        var toIndex = stones.reduce((max, stone) => Math.max(max, stone.x), stones[0].x);
 
         var self = this;
 
@@ -64,7 +64,7 @@ class FieldModel {
         var start = -1;
         var result = 0;
 
-        for (var i = from; i <= to; i++) {
+        for (var i = fromIndex; i <= toIndex; i++) {
             var index = i - decr;
 
             var lineFilled = this.cells[index].every(function(item) {
