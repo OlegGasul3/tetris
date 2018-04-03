@@ -5,10 +5,8 @@ class FigureFactory {
 
     generateRandomFigure() {
         let figureClass = FigureFactory.FIGURES[Utils.generateRandom(FigureFactory.FIGURES.length)];
+        let colorIndex = Utils.generateRandom(Images.SOURCES.length);
 
-        let figure = new figureClass();
-        figure.setColor(Utils.generateRandom(Images.SOURCES.length));
-
-        return figure;
+        return new figureClass(colorIndex);
     }
 }

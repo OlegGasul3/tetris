@@ -71,77 +71,77 @@ class BaseFigure {
 }
 
 class Axe2Figure extends BaseFigure {
-    constructor() {
+    constructor(color) {
         super([
             [{x: 0, y: 0}, {x: 0, y: 1}, {x: 0, y: 2}, {x: 1, y: 2}],
             [{x: 0, y: 0}, {x: 1, y: 0}, {x: 2, y: 0}, {x: 0, y: 1}],
             [{x: 0, y: 0}, {x: 1, y: 0}, {x: 1, y: 1}, {x: 1, y: 2}],
             [{x: 2, y: 0}, {x: 0, y: 1}, {x: 1, y: 1}, {x: 2, y: 1}]
-        ]);
+        ], color);
     }
 }
 
 class AxeFigure extends BaseFigure {
-    constructor() {
+    constructor(color) {
         super([
             [{x: 0, y: 0}, {x: 1, y: 0}, {x: 2, y: 0}, {x: 2, y: 1}],
             [{x: 1, y: 0}, {x: 1, y: 1}, {x: 1, y: 2}, {x: 0, y: 2}],
             [{x: 0, y: 0}, {x: 0, y: 1}, {x: 1, y: 1}, {x: 2, y: 1}],
             [{x: 0, y: 0}, {x: 0, y: 1}, {x: 0, y: 2}, {x: 1, y: 0}]
-        ]);
+        ], color);
     }
 }
 
 class CubeFigure extends BaseFigure {
-    constructor() {
+    constructor(color) {
         super([
             [{x: 0, y: 0}, {x: 1, y: 0}, {x: 0, y: 1}, {x: 1, y: 1}]
-        ]);
+        ], color);
     }
 }
 
 class LadderLFigure extends BaseFigure {
-    constructor() {
+    constructor(color) {
         super([
             [{x: 1, y: 0}, {x: 1, y: 1}, {x: 0, y: 1}, {x: 0, y: 2}],
             [{x: 0, y: 0}, {x: 1, y: 0}, {x: 1, y: 1}, {x: 2, y: 1}]
-        ]);
+        ], color);
     }
 }
 
 class LadderRFigure extends BaseFigure {
-    constructor() {
+    constructor(color) {
         super([
             [{x: 0, y: 0}, {x: 0, y: 1}, {x: 1, y: 1}, {x: 1, y: 2}],
             [{x: 1, y: 0}, {x: 2, y: 0}, {x: 0, y: 1}, {x: 1, y: 1}]
-        ]);
+        ], color);
     }
 }
 
 class LineFigure extends BaseFigure {
-    constructor() {
+    constructor(color) {
         super([
             [{x: 0, y: 0}, {x: 0, y: 1}, {x: 0, y: 2}, {x: 0, y: 3}],
             [{x: 0, y: 0}, {x: 1, y: 0}, {x: 2, y: 0}, {x: 3, y: 0}]
-        ]);
+        ], color);
     }
 }
 
 class PointFigure extends BaseFigure {
-    constructor() {
+    constructor(color) {
         super([
             [{x: 0, y: 0}]
-        ]);
+        ], color);
     }
 }
 
 class TriangleFigure extends BaseFigure {
-    constructor() {
+    constructor(color) {
         super([
             [{x: 0, y: 0}, {x: 0, y: 1}, {x: 0, y: 2}, {x: 1, y: 1}],
             [{x: 0, y: 0}, {x: 1, y: 0}, {x: 2, y: 0}, {x: 1, y: 1}],
             [{x: 1, y: 0}, {x: 1, y: 1}, {x: 1, y: 2}, {x: 0, y: 1}],
             [{x: 1, y: 0}, {x: 0, y: 1}, {x: 1, y: 1}, {x: 2, y: 1}]
-        ]);
+        ], color);
     }
 }
