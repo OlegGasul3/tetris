@@ -19,7 +19,7 @@ class FieldModel {
 
     getStartCoords() {
         return {
-            x: this.maxX - Consts.INVISIBLE_ROWS - 3,
+            x: this.maxX - (Consts.INVISIBLE_ROWS + Consts.ABOVE_OFFSET),
             y: Math.floor(this.maxY / 2)
         }
     }
@@ -80,8 +80,6 @@ class FieldModel {
                 this.cells.splice(start - decr, count);
                 fillUpperLinesEmpty(count);
 
-                console.dir(this.cells);
-
                 decr += count;
                 result += count;
                 count = 0;
@@ -94,8 +92,6 @@ class FieldModel {
 
             result += count;
             fillUpperLinesEmpty(count);
-
-            console.dir(this.cells);
         }
 
         return result;

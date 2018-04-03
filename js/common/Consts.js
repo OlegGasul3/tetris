@@ -6,4 +6,8 @@ class Consts {
     static get INVISIBLE_ROWS() {
         return 4;
     }
+
+    static get ABOVE_OFFSET() {
+        return 3;
+    }
 }
