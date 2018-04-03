@@ -27,7 +27,7 @@ class FieldModel {
     areCellsEmpty(stones) {
         var self = this;
         return stones.every((stone) => {
-            return stone.x >= 0 && stone.x < self.maxX && stone.y >= 0 && stone.y < self.maxY && self.cells[stone.x][stone.y] === false;
+            return self.cells[stone.x] && self.cells[stone.x][stone.y] === false;
         });
     }
 
