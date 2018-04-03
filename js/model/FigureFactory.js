@@ -3,10 +3,6 @@ class FigureFactory {
         return [Axe2Figure, AxeFigure, CubeFigure, LadderLFigure, LadderRFigure, LineFigure, PointFigure, TriangleFigure];
     }
 
-    constructor() {
-
-    }
-
     generateRandomFigure() {
         let figureClass = FigureFactory.FIGURES[Utils.generateRandom(FigureFactory.FIGURES.length)];
 
