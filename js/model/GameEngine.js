@@ -43,7 +43,7 @@ class GameEngine {
             return;
         }
 
-        var stones = this.currentFigure.getRotateStones();
+        var stones = this.currentFigure.getNextRotationStones();
         if (!this.fieldModel.areCellsEmpty(stones)) {
             return;
         }

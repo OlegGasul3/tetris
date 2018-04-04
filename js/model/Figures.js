@@ -24,30 +24,28 @@ class BaseFigure {
         this.color = color;
     }
 
-    getStones() {
+    _calculateAbsolutePositions(stones, shiftX = 0, shiftY = 0) {
         var self = this;
-        return this.stones[this.rotationIndex].map((stone) => {
-            return { x: self.coords.x + stone.x, y: self.coords.y + stone.y };
-        });
+        return stones.map((stone) => {
+            return { x: self.coords.x + stone.x + shiftX, y: self.coords.y + stone.y + shiftY };
+        })
+    }
+
+    getStones() {
+        return this._calculateAbsolutePositions(this.stones[this.rotationIndex]);
     }
 
     getShiftStones(shiftX, shiftY) {
-        var self = this;
-        return this.stones[this.rotationIndex].map((stone) => {
-            return { x: self.coords.x + stone.x + shiftX, y: self.coords.y + stone.y + shiftY };
-        });
+        return this._calculateAbsolutePositions(this.stones[this.rotationIndex], shiftX, shiftY);
     }
 
-    getRotateStones() {
+    getNextRotationStones() {
         var rotateIndex = this.rotationIndex + 1;
         if (rotateIndex >= this.stones.length) {
             rotateIndex = 0;
         }
 
-        var self = this;
-        return this.stones[rotateIndex].map((stone) => {
-            return { x: self.coords.x + stone.x, y: self.coords.y + stone.y };
-        });
+        return this._calculateAbsolutePositions(this.stones[rotateIndex]);
     }
 
     rotate() {
