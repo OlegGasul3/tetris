@@ -1,6 +1,6 @@
 class FieldModel {
     constructor(maxX, maxY) {
-        this.maxX = maxX + Consts.INVISIBLE_ROWS;
+        this.maxX = maxX;
         this.maxY = maxY;
 
         this.cells = [];
@@ -19,7 +19,7 @@ class FieldModel {
 
     getStartCoords() {
         return {
-            x: this.maxX - (Consts.INVISIBLE_ROWS + Consts.ABOVE_OFFSET),
+            x: this.maxX - Consts.INVISIBLE_ROWS,
             y: Math.floor(this.maxY / 2)
         }
     }
